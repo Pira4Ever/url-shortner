@@ -15,10 +15,10 @@ public class UrlService {
     @Autowired
     UrlRepository urlRepository;
 
-    @Value("${config.url.minSize}")
+    @Value("${config.url.minSize:5}")
     Integer idMinSize;
 
-    @Value("${config.url.maxSize}")
+    @Value("${config.url.maxSize:10}")
     Integer idMaxSize;
 
     public UrlDto createUrl(UrlDto urlData) {
@@ -32,7 +32,7 @@ public class UrlService {
         return randomAlphanumeric(idMinSize, idMaxSize);
     }
 
-    public String findById(String id) throws Exception{
+    public String findById(String id) {
         Url url = urlRepository.findById(id).orElseThrow(IdNotFoundException::new);
         return url.getUrlLong();
     }
