@@ -37,6 +37,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Should create url successfully")
     void createUrl() {
         ReflectionTestUtils.setField(service, "idMinSize", 5);
         ReflectionTestUtils.setField(service, "idMaxSize", 10);

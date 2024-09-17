@@ -15,14 +15,14 @@ public class UrlController {
     UrlService urlService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> redirectToUrlLong(@PathVariable("id") String id) throws Exception {
+    public ResponseEntity<String> redirectToUrlLong(@PathVariable("id") String id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", urlService.findById(id));
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
     @PostMapping
-    public UrlDto createUrl(@RequestBody UrlDto urlData) {
-        return urlService.createUrl(urlData);
+    public ResponseEntity<UrlDto> createUrl(@RequestBody UrlDto urlData) {
+        return new ResponseEntity<>(urlService.createUrl(urlData), HttpStatus.CREATED);
     }
 }
