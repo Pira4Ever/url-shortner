@@ -16,8 +16,8 @@ public class SwaggerConfiguration {
                         .description("A url shortner API made using spring framework")
                         .version("v1.0")
                         .license(new License().name("MIT").url("http://springdoc.org"))
-                        .contact(new Contact().name("Octavio Piratininga").url("https://github.com/Pira4Ever").email("octavio.piratininga@gmail.com"))
-                        .termsOfService("Termo de uso: Open Source"));
+                        .contact(new Contact().name("Octavio Piratininga").url("https://github.com/Pira4Ever").email("59701790+Pira4Ever@users.noreply.github.com"))
+                        .termsOfService("Terms of use: Open Source"));
     }
 
 }
