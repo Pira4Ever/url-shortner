@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 
 /**
  * Class containing the application's business rule
@@ -31,10 +31,10 @@ public class UrlService {
      * @return return an {@link UrlDto} containing the info about the created url
      */
     public UrlDto createUrl(UrlDto urlData) {
-        urlData = urlData.withId(generateRandomId());
-        Url newUrl = new Url(urlData);
+        UrlDto newUrlData = urlData.withId(generateRandomId());
+        Url newUrl = new Url(newUrlData);
         urlRepository.save(newUrl);
-        return urlData;
+        return newUrlData;
     }
 
     /**
@@ -42,7 +42,7 @@ public class UrlService {
      * @return a random generated id
      */
     private String generateRandomId() {
-        return randomAlphanumeric(idMinSize, idMaxSize);
+        return secure().nextAlphanumeric(idMinSize, idMaxSize);
     }
 
     /**

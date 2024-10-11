@@ -7,11 +7,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * A controller that receives the application's request
@@ -26,7 +28,6 @@ public class UrlController {
     /**
      * redirect to the url with the id, if it doesn't exist return ID not found
      * @param id the id of that will be searched on db
-     * @return {@link ResponseEntity} that redirect to the original url
      */
     @Operation(summary = "Redirect to the original url based on id", method = "GET",
             parameters = @Parameter(name = "id", in = ParameterIn.PATH))
@@ -36,10 +37,8 @@ public class UrlController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<String> redirectToUrlLong(@PathVariable("id") String id) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", urlService.findById(id));
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    public void redirectToUrlLong(@PathVariable("id") String id, HttpServletResponse response) throws IOException{
+        response.sendRedirect(urlService.findById(id));
     }
 
     /**
