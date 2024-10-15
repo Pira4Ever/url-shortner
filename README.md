@@ -55,11 +55,7 @@ After starting the app, you can shorten URLs by accessing: http://localhost:8080
 }
 ```
 **RESPONSE**
-```json
-{
-  "urlLong": "https://example.com/",
-  "id": "VjMD6"
-}
+Return an qrcode image containg the short url
 ```
 
 ## License
