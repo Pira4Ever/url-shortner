@@ -56,7 +56,6 @@ After starting the app, you can shorten URLs by accessing: http://localhost:8080
 ```
 **RESPONSE**
 Return an qrcode image containg the short url
-```
 
 ## License
 Url shortner is [MIT licensed](./LICENSE)
