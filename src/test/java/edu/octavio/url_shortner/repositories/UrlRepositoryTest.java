@@ -1,6 +1,6 @@
 package edu.octavio.url_shortner.repositories;
 
-import edu.octavio.url_shortner.dtos.UrlDto;
+import edu.octavio.url_shortner.dtos.UrlDtoIn;
 import edu.octavio.url_shortner.models.Url;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ class UrlRepositoryTest {
     @DisplayName("Should get Url successfully from DB")
     void findByIdCase1() {
         String id = "abccba";
-        UrlDto data = new UrlDto(id, "https://www.github.com/Pira4Ever");
+        UrlDtoIn data = new UrlDtoIn(id, "https://www.github.com/Pira4Ever");
         this.createUrl(data);
 
         Optional<Url> result = this.repository.findById(id);
@@ -45,7 +45,7 @@ class UrlRepositoryTest {
         assertTrue(result.isEmpty());
     }
 
-    private Url createUrl(UrlDto data) {
+    private Url createUrl(UrlDtoIn data) {
         Url newUrl = new Url(data);
         this.entityManager.persist(newUrl);
         return newUrl;

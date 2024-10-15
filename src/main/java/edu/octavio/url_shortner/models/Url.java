@@ -1,6 +1,6 @@
 package edu.octavio.url_shortner.models;
 
-import edu.octavio.url_shortner.dtos.UrlDto;
+import edu.octavio.url_shortner.dtos.UrlDtoIn;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,9 +22,9 @@ public class Url {
 
     /**
      * A constructor that receives UrlDto to create an Url
-     * @param urlData an UrlDto instance that contains id and urlLong
+     * @param urlData an UrlDtoIn instance that contains id and urlLong
      */
-    public Url(UrlDto urlData) {
+    public Url(UrlDtoIn urlData) {
         this.id = urlData.id();
         this.urlLong = urlData.urlLong();
     }

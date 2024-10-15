@@ -1,7 +1,8 @@
 package edu.octavio.url_shortner.controllers;
 
 import com.google.gson.Gson;
-import edu.octavio.url_shortner.dtos.UrlDto;
+import edu.octavio.url_shortner.dtos.UrlDtoIn;
+import edu.octavio.url_shortner.dtos.UrlDtoOut;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,35 +37,33 @@ class UrlControllerTest {
     @Test
     @DisplayName("Should redirect to page with the specified id")
     void redirectToUrlLongCase2() throws Exception{
-        UrlDto createdUrl = createEntity();
+        String url = "https://www.github.com/Pira4Ever";
+        UrlDtoOut createdUrl = createEntity(url);
         mockMvc.perform(get("/{id}", createdUrl.id()))
                 .andExpect(status().isFound())
-                .andExpect(header().string("Location", createdUrl.urlLong()));
+                .andExpect(header().string("Location", url));
 
     }
 
     @Test
     @DisplayName("Should return HTTP status 201 created and the information about the url")
     void createUrl() throws Exception {
-        UrlDto urlData = new UrlDto(null, "https://www.github.com/Pira4Ever");
+        UrlDtoIn urlData = new UrlDtoIn(null, "https://www.github.com/Pira4Ever");
         mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("{\"urlLong\": \"%s\"}", urlData.urlLong()))
         )
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.urlLong").exists())
-                .andExpect(jsonPath("$.urlLong").value(urlData.urlLong()));
+                .andExpect(status().isCreated());
     }
 
-    private UrlDto createEntity() throws Exception {
-        Gson gson = new Gson();
-        UrlDto urlData = new UrlDto(null, "https://www.github.com/Pira4Ever");
+    private UrlDtoOut createEntity(String urlLong) throws Exception {
         MvcResult returned = mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(String.format("{\"urlLong\": \"%s\"}", urlData.urlLong()))
+                .content(String.format("{\"urlLong\": \"%s\"}", urlLong))
         ).andReturn();
 
-        return gson.fromJson(returned.getResponse().getContentAsString(), UrlDto.class);
+        int split_nums = returned.getResponse().getHeader("Location").split("/").length;
+
+        return new UrlDtoOut(returned.getResponse().getHeader("Location").split("/")[split_nums - 1], returned.getResponse().getContentAsByteArray());
     }
 }
