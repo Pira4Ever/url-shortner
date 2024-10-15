@@ -16,4 +16,11 @@ public interface UrlRepository extends JpaRepository<Url, Integer> {
      * @return the url wrapped in an {@link Optional}
      */
     Optional<Url> findById(String id);
+
+    /**
+     *
+     * @param urlLong the url that will be checked in db
+     * @return the url wrapped in an {@link Optional}
+     */
+    Optional<Url> findByUrlLong(String urlLong);
 }

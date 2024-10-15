@@ -11,7 +11,7 @@ import lombok.Setter;
  * @author octavio
  */
 @Entity
-@Table(name = "urls")
+@Table(name = "urls", indexes = {@Index(name = "idx_urlLong", columnList = "urlLong")})
 @Getter
 @Setter
 @NoArgsConstructor

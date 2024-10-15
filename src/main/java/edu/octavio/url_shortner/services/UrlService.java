@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.RandomStringUtils.secure;
 
@@ -47,6 +48,18 @@ public class UrlService {
      * @return return an UrlDtoOut instance containing the generated id and the QRCode
      */
     public UrlDtoOut createUrl(UrlDtoIn urlData) {
+        Optional<Url> urlDb =urlRepository.findByUrlLong(urlData.urlLong());
+        if (urlDb.isPresent()) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(generateBarCode(urlDb.get().getId()), "jpg", baos);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            return new UrlDtoOut(urlDb.get().getId(), baos.toByteArray());
+        }
+
         UrlDtoIn newUrlData = urlData.withId(generateRandomId());
         Url newUrl = new Url(newUrlData);
         urlRepository.save(newUrl);
