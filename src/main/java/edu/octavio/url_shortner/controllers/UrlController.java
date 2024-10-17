@@ -49,6 +49,7 @@ public class UrlController {
      * @param urlData the data of the original url
      * @return return an image containing the QRCode url
      */
+    @CrossOrigin(origins = "*", exposedHeaders = "Location")
     @Operation(summary = "Create short url and return it", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created shor url"),
